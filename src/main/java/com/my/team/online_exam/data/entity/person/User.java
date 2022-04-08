@@ -27,7 +27,7 @@ import java.util.Objects;
 @Table(name = "USERS", schema = "ONLINE_EXAM",uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
     @Column(name = "NAME",length = 20)
