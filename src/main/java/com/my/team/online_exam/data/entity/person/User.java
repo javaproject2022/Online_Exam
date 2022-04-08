@@ -1,5 +1,6 @@
-package com.my.team.online_exam.data.entity;
+package com.my.team.online_exam.data.entity.person;
 
+import com.my.team.online_exam.data.entity.Address;
 import com.my.team.online_exam.data.enums.UserStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
