@@ -1,8 +1,10 @@
 package com.my.team.online_exam.data.entity.person;
 
 import com.my.team.online_exam.data.entity.Address;
+import com.my.team.online_exam.data.enums.Role;
 import com.my.team.online_exam.data.enums.UserStatus;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,13 +15,16 @@ import java.util.Objects;
 /**
  * @author fh.kazemi
  **/
+
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@SuperBuilder
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "USERS", schema = "ONLINE_EXAM")
+@Table(name = "USERS", schema = "ONLINE_EXAM",uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +60,24 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, email, username, password);
+    }
+
+
+    /* @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
@@ -79,5 +101,6 @@ public class User {
         return Objects.hash(getId(), getName(), getSurname(),
                 getEmail(), getUsername(), getPassword(), getAddress(),
                 getRegisterDate(), getModifyDate(), getStatus());
-    }
+    }*/
+
 }
